@@ -1,0 +1,9 @@
+.venv
+.git
+**/__pycache__
+examples
+docs
+deploy
+space
+tests
+*.zip

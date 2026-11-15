@@ -10,6 +10,7 @@ import email
 import html
 import io
 import json
+import os
 import random
 import shutil
 import tempfile
@@ -32,7 +33,7 @@ from .score import format_details, format_report, score_corpus
 
 AS_OF = date(2026, 11, 15)
 BENCH_SEED, BENCH_N = 1, 60
-WORK = Path(tempfile.gettempdir()) / f"slipshod-{__version__}"
+WORK = Path(os.environ.get("SLIPSHOD_WORK") or Path(tempfile.gettempdir()) / f"slipshod-{__version__}")
 BENCH = WORK / "benchmark"
 BENCH_ZIP = WORK / f"slipshod-benchmark-seed{BENCH_SEED}-n{BENCH_N}.zip"
 _bench_lock = threading.Lock()

@@ -8,9 +8,10 @@
 
 | | |
 |---|---|
-| **In the browser, no install** | **[Live demo →](https://huggingface.co/spaces/abdulmuminyqn/slipshod)** Generate a submission, flip through the documents, reveal the traps, and score your agent on a 60-submission benchmark |
+| **In the browser, no install** | **[ancep.yaqeen.me →](https://ancep.yaqeen.me)** Generate a submission, flip through the documents, reveal the traps, and score your agent on a 60-submission benchmark. (If nobody has used it for a while, it takes about 15 seconds to wake up.) |
 | **One command** (needs [uv](https://docs.astral.sh/uv/)) | `uvx --from git+https://github.com/Abdulmumin1/slipshod slipshod generate corpus -n 30` |
 | **The web app on your machine** | `uvx --from "slipshod[app] @ git+https://github.com/Abdulmumin1/slipshod" slipshod app` |
+| **Docker** | `docker build -t slipshod https://github.com/Abdulmumin1/slipshod.git && docker run -p 7860:7860 slipshod` |
 | **Just look at the files** | [`examples/sample/`](examples/sample/): six submissions with answer keys |
 
 Every team building agents for insurance has the same problem. Real submissions are messy and confidential, so you can't share them, put them in CI, or measure progress on them. Clean synthetic data passes every test and teaches you nothing.
@@ -196,6 +197,8 @@ render/      plans -> .xlsx (openpyxl), PDF forms and loss runs (PyMuPDF), scans
              photos (Pillow + NumPy), .eml (stdlib)
 score.py     matching, tolerant parsing, hallucination / flag / defect-survival metrics
 ```
+
+The hosted demo runs this repo's `Dockerfile` on Cloudflare Containers, behind a small Worker that shows a wake-up page during cold starts (`deploy/cloudflare/`).
 
 Generation is deterministic: the same `--seed` and `--as-of` give byte-identical files. Every name, company, broker and insurer is fictional.
 

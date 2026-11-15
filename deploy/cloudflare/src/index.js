@@ -29,10 +29,18 @@ export class SlipshodApp extends DurableObject {
 	constructor(ctx, env) {
 		super(ctx, env);
 		this.ready = false;
+		this.version = env.CF_VERSION_METADATA?.id ?? "dev";
 		const container = ctx.container;
 		if (container?.running) {
-			void ctx.blockConcurrencyWhile(() => container.setInactivityTimeout(SLEEP_AFTER_MS));
-			this.observeExit();
+			void ctx.blockConcurrencyWhile(async () => {
+				// A container started by an older deploy runs the old image: replace it.
+				if ((await ctx.storage.get("version")) !== this.version) {
+					await container.destroy("superseded by a new deploy");
+					return;
+				}
+				await container.setInactivityTimeout(SLEEP_AFTER_MS);
+				this.observeExit();
+			});
 		}
 	}
 
@@ -71,6 +79,7 @@ export class SlipshodApp extends DurableObject {
 		const container = this.ctx.container;
 		if (!container.running) {
 			container.start({ image: container.images.base, instance: "standard-1", enableInternet: false });
+			await this.ctx.storage.put("version", this.version);
 		}
 		this.observeExit();
 		await container.setInactivityTimeout(SLEEP_AFTER_MS);

@@ -1,0 +1,1 @@
+slipshod[app] @ git+https://github.com/Abdulmumin1/slipshod

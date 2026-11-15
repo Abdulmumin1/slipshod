@@ -1,0 +1,78 @@
+{
+  "submission_id": "SUB-0006",
+  "line_of_business": "cargo",
+  "insured": {
+    "name": "Harrow Engineering Ltd",
+    "address": {
+      "line1": "Units 8-9, Aire Valley Trading Estate",
+      "town": "Cardiff",
+      "postcode": "CF10 7WS"
+    },
+    "trade": "Precision engineering",
+    "annual_revenue": 3590000,
+    "employees": null
+  },
+  "policy": {
+    "inception_date": "2026-12-01",
+    "expiry_date": "2027-11-30",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": true,
+    "signed_date": "2026-11-14"
+  },
+  "property": null,
+  "cyber": null,
+  "cargo": {
+    "annual_transit_value": 26990000,
+    "max_any_one_conveyance": 750000,
+    "commodities": "Machined metal components",
+    "conveyances": [
+      "rail",
+      "road",
+      "sea"
+    ],
+    "geographical_limits": "UK, Europe and Turkey",
+    "packaging": "Refrigerated containers"
+  },
+  "claims": [
+    {
+      "date_of_loss": "2025-10-13",
+      "cause": "Theft in transit",
+      "insurer": "Castlegate Underwriting",
+      "paid": 21750,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2026-11-08",
+      "cause": "Theft in transit",
+      "insurer": "Castlegate Underwriting",
+      "paid": 0,
+      "reserved": 7700,
+      "status": "open"
+    }
+  ],
+  "flags": [
+    {
+      "type": "missing",
+      "field": "claims",
+      "note": "Loss runs only cover 3 years; insurers need 5."
+    },
+    {
+      "type": "conflict",
+      "field": "claims",
+      "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+    },
+    {
+      "type": "conflict",
+      "field": "insured.annual_revenue",
+      "note": "Turnover on the proposal form differs from the figure in the email."
+    },
+    {
+      "type": "missing",
+      "field": "insured.employees",
+      "note": "'Number of employees' left blank on the proposal form."
+    }
+  ]
+}

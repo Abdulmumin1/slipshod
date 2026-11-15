@@ -1,0 +1,82 @@
+{
+  "submission_id": "SUB-0002",
+  "line_of_business": "cyber",
+  "insured": {
+    "name": "Hartley Recruitment Limited",
+    "address": {
+      "line1": "143 Kingsway Avenue",
+      "town": "Derby",
+      "postcode": "DE21 4NA"
+    },
+    "trade": "Recruitment agency",
+    "annual_revenue": 27540000,
+    "employees": null
+  },
+  "policy": {
+    "inception_date": "2027-02-01",
+    "expiry_date": "2028-01-31",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": true,
+    "signed_date": "2026-11-12"
+  },
+  "property": null,
+  "cyber": {
+    "records_held": 159500,
+    "mfa_remote_access": true,
+    "mfa_email": true,
+    "offline_backups": false,
+    "edr": false,
+    "pen_test_last_12m": true,
+    "pci_compliant": true,
+    "limit_requested": 5000000
+  },
+  "cargo": null,
+  "claims": [
+    {
+      "date_of_loss": "2025-04-02",
+      "cause": "Business email compromise",
+      "insurer": "Meridian General",
+      "paid": 21500,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2026-01-21",
+      "cause": "Data breach",
+      "insurer": "Meridian General",
+      "paid": 19600,
+      "reserved": 15800,
+      "status": "open"
+    },
+    {
+      "date_of_loss": "2026-06-26",
+      "cause": "Business email compromise",
+      "insurer": "Meridian General",
+      "paid": 39950,
+      "reserved": 29250,
+      "status": "open"
+    },
+    {
+      "date_of_loss": "2026-10-30",
+      "cause": "System outage",
+      "insurer": "Meridian General",
+      "paid": 0,
+      "reserved": 6900,
+      "status": "open"
+    }
+  ],
+  "flags": [
+    {
+      "type": "missing",
+      "field": "claims",
+      "note": "Loss runs only cover 3 years; insurers need 5."
+    },
+    {
+      "type": "missing",
+      "field": "insured.employees",
+      "note": "'Number of employees' left blank on the proposal form."
+    }
+  ]
+}

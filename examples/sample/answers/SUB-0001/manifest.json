@@ -1,0 +1,185 @@
+{
+  "submission_id": "SUB-0001",
+  "line_of_business": "property",
+  "difficulty": "hard",
+  "seed": 1253977682,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_re_harrow_foods_sons_ltd_renewal_01_01_2.eml",
+    "attachments/Harrow proposal form.pdf",
+    "attachments/IMG_7177.jpg",
+    "attachments/Loss runs Albion 2024-2026.pdf",
+    "attachments/SOV 2027 FINAL v3.xlsx"
+  ],
+  "documents": {
+    "sov": {
+      "files": [
+        "SOV 2027 FINAL v3.xlsx"
+      ],
+      "attached": true
+    },
+    "form": {
+      "files": [
+        "Harrow proposal form.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:0": {
+      "files": [
+        "IMG_7177.jpg"
+      ],
+      "attached": true
+    },
+    "lossrun:1": {
+      "files": [
+        "Loss runs Albion 2024-2026.pdf"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "lossrun.phone_photo",
+      "doc": [
+        "IMG_7177.jpg"
+      ],
+      "description": "A loss run arrives as phone photos (JPEG per page): perspective, shadows, desk in frame.",
+      "resolvable": true,
+      "checks": [
+        "claims#set",
+        "claims.fields"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.title_block",
+      "doc": [
+        "SOV 2027 FINAL v3.xlsx"
+      ],
+      "description": "Title rows, a merged 'Sums Insured' group header, and blank spacer rows push the real header down and break naive table parsing.",
+      "resolvable": true,
+      "checks": [
+        "property.locations#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.mixed_notation",
+      "doc": [
+        "SOV 2027 FINAL v3.xlsx"
+      ],
+      "description": "Sprinklers marked with ticks/crosses; some build years written 'c. 1965'.",
+      "resolvable": true,
+      "checks": [
+        "property.locations[M1 1QR].sprinklered",
+        "property.locations[M1 1QR].year_built",
+        "property.locations[RG30 1SL].sprinklered",
+        "property.locations[RG30 1SL].year_built",
+        "property.locations[LS10 6EB].sprinklered",
+        "property.locations[LS10 6EB].year_built",
+        "property.locations[M17 6SU].sprinklered",
+        "property.locations[M17 6SU].year_built",
+        "property.locations[M12 2YG].sprinklered",
+        "property.locations[M12 2YG].year_built",
+        "property.locations[RG30 4WJ].sprinklered",
+        "property.locations[RG30 4WJ].year_built"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.disposed_location",
+      "doc": [
+        "SOV 2027 FINAL v3.xlsx"
+      ],
+      "description": "A sold site (BS3 2DA) is still in the schedule as a hidden, struck-through row with a 'SOLD' cell comment.",
+      "resolvable": true,
+      "checks": [
+        "property.locations#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.missing_construction",
+      "doc": [
+        "SOV 2027 FINAL v3.xlsx"
+      ],
+      "description": "Construction for RG30 4WJ is blank/'TBC'.",
+      "resolvable": true,
+      "checks": [
+        "property.locations[RG30 4WJ].construction"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "property.locations[RG30 4WJ].construction",
+        "note": "Construction not provided."
+      }
+    },
+    {
+      "code": "form.revenue_conflict",
+      "doc": [
+        "01_re_harrow_foods_sons_ltd_renewal_01_01_2.eml"
+      ],
+      "description": "The email gives turnover as \u00a32,740,000; the form says \u00a32,980,000. Nothing says which is right.",
+      "resolvable": false,
+      "checks": [
+        "insured.annual_revenue"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "insured.annual_revenue",
+        "note": "Turnover on the proposal form differs from the figure in the email."
+      }
+    },
+    {
+      "code": "form.crossed_out_correction",
+      "doc": [
+        "Harrow proposal form.pdf"
+      ],
+      "description": "'Number of employees' has a value crossed out (79) with the replacement handwritten beside it (86).",
+      "resolvable": true,
+      "checks": [
+        "insured.employees"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.handwritten",
+      "doc": [
+        "Harrow proposal form.pdf"
+      ],
+      "description": "Form completed by hand in blue ink, partly in block capitals.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "email.stale_forwarded_figures",
+      "doc": [
+        "01_re_harrow_foods_sons_ltd_renewal_01_01_2.eml"
+      ],
+      "description": "Last year's renewal summary is forwarded in the thread, with last year's turnover, headcount and dates in clean, easy-to-grab text.",
+      "resolvable": true,
+      "checks": [
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": [
+    "insured.annual_revenue"
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "submission_id": "SUB-0005",
+  "line_of_business": "cyber",
+  "difficulty": "hard",
+  "seed": 1531000905,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_renewal_info.eml",
+    "attachments/Granite proposal form.pdf",
+    "attachments/Loss runs Harbourline 2024-2026.pdf"
+  ],
+  "documents": {
+    "form": {
+      "files": [
+        "Granite proposal form.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:1": {
+      "files": [
+        "Loss runs Harbourline 2024-2026.pdf"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "claims.short_loss_run",
+      "doc": [
+        "Loss runs Harbourline 2024-2026.pdf"
+      ],
+      "description": "Loss runs only go back to 01/02/2024 (3 years, not 5). Older claims are unknowable.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "claims",
+        "note": "Loss runs only cover 3 years; insurers need 5."
+      }
+    },
+    {
+      "code": "claims.declared_claims_free",
+      "doc": [
+        "Granite proposal form.pdf"
+      ],
+      "description": "The proposal form ticks 'No claims in 5 years' but the loss runs show claims. A fair-presentation problem to raise.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "claims",
+        "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+      }
+    },
+    {
+      "code": "form.crossed_out_correction",
+      "doc": [
+        "Granite proposal form.pdf"
+      ],
+      "description": "'Number of employees' has a value crossed out (31) with the replacement handwritten beside it (38).",
+      "resolvable": true,
+      "checks": [
+        "insured.employees"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.blank_field",
+      "doc": [
+        "Granite proposal form.pdf"
+      ],
+      "description": "'Approx. number of personal records held' was left blank and is not stated anywhere else.",
+      "resolvable": true,
+      "checks": [
+        "cyber.records_held"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "cyber.records_held",
+        "note": "'Approx. number of personal records held' left blank on the proposal form."
+      }
+    },
+    {
+      "code": "form.double_ticked",
+      "doc": [
+        "Granite proposal form.pdf"
+      ],
+      "description": "Both 'Yes' and 'No' are ticked for 'Offline or immutable backups at least weekly?'.",
+      "resolvable": false,
+      "checks": [
+        "cyber.offline_backups"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "cyber.offline_backups",
+        "note": "Both Yes and No ticked for 'Offline or immutable backups at least weekly?'."
+      }
+    },
+    {
+      "code": "form.handwritten",
+      "doc": [
+        "Granite proposal form.pdf"
+      ],
+      "description": "Form completed by hand in blue ink, partly in block capitals.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "cyber.records_held",
+        "cyber.mfa_remote_access",
+        "cyber.mfa_email",
+        "cyber.offline_backups",
+        "cyber.edr",
+        "cyber.pen_test_last_12m",
+        "cyber.pci_compliant",
+        "cyber.limit_requested",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": [
+    "cyber.offline_backups"
+  ]
+}

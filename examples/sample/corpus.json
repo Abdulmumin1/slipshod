@@ -1,0 +1,94 @@
+{
+  "generator": "slipshod 0.1.0",
+  "seed": 2026,
+  "as_of": "2026-11-15",
+  "count": 6,
+  "submissions": [
+    {
+      "id": "SUB-0001",
+      "line_of_business": "property",
+      "difficulty": "hard",
+      "defects": [
+        "lossrun.phone_photo",
+        "sov.title_block",
+        "sov.mixed_notation",
+        "sov.disposed_location",
+        "sov.missing_construction",
+        "form.revenue_conflict",
+        "form.crossed_out_correction",
+        "form.handwritten",
+        "email.stale_forwarded_figures"
+      ]
+    },
+    {
+      "id": "SUB-0002",
+      "line_of_business": "cyber",
+      "difficulty": "hard",
+      "defects": [
+        "claims.unreported_recent_claim",
+        "claims.short_loss_run",
+        "claims.open_claims_repeated",
+        "lossrun.scanned",
+        "form.blank_field",
+        "form.fillable_fields",
+        "email.stale_forwarded_figures"
+      ]
+    },
+    {
+      "id": "SUB-0003",
+      "line_of_business": "cargo",
+      "difficulty": "hard",
+      "defects": [
+        "claims.unreported_recent_claim",
+        "claims.declared_claims_free",
+        "lossrun.phone_photo",
+        "form.revenue_conflict",
+        "form.unsigned",
+        "form.fillable_fields",
+        "email.stale_forwarded_figures"
+      ]
+    },
+    {
+      "id": "SUB-0004",
+      "line_of_business": "property",
+      "difficulty": "hard",
+      "defects": [
+        "claims.declared_claims_free",
+        "claims.open_claims_repeated",
+        "sov.single_address_column",
+        "sov.units_thousands",
+        "sov.disposed_location",
+        "form.revenue_conflict",
+        "form.scanned"
+      ]
+    },
+    {
+      "id": "SUB-0005",
+      "line_of_business": "cyber",
+      "difficulty": "hard",
+      "defects": [
+        "claims.short_loss_run",
+        "claims.declared_claims_free",
+        "form.crossed_out_correction",
+        "form.blank_field",
+        "form.double_ticked",
+        "form.handwritten"
+      ]
+    },
+    {
+      "id": "SUB-0006",
+      "line_of_business": "cargo",
+      "difficulty": "hard",
+      "defects": [
+        "claims.unreported_recent_claim",
+        "claims.short_loss_run",
+        "claims.declared_claims_free",
+        "lossrun.scanned",
+        "form.revenue_conflict",
+        "form.blank_field",
+        "form.fillable_fields",
+        "email.stale_forwarded_figures"
+      ]
+    }
+  ]
+}

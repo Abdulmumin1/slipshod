@@ -1,0 +1,167 @@
+{
+  "submission_id": "SUB-0004",
+  "line_of_business": "property",
+  "difficulty": "hard",
+  "seed": 1940765275,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_re_info_needed_for_your_renewal.eml",
+    "attachments/Kestrel SOV 2026.xlsx",
+    "attachments/Loss runs Castlegate 2025-2026.pdf",
+    "attachments/Loss runs Meridian 2021-2025.pdf",
+    "attachments/SCAN_20261115_2874.pdf"
+  ],
+  "documents": {
+    "sov": {
+      "files": [
+        "Kestrel SOV 2026.xlsx"
+      ],
+      "attached": true
+    },
+    "form": {
+      "files": [
+        "SCAN_20261115_2874.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:0": {
+      "files": [
+        "Loss runs Meridian 2021-2025.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:1": {
+      "files": [
+        "Loss runs Castlegate 2025-2026.pdf"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "claims.declared_claims_free",
+      "doc": [
+        "SCAN_20261115_2874.pdf"
+      ],
+      "description": "The proposal form ticks 'No claims in 5 years' but the loss runs show claims. A fair-presentation problem to raise.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "claims",
+        "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+      }
+    },
+    {
+      "code": "claims.open_claims_repeated",
+      "doc": [
+        "Loss runs Castlegate 2025-2026.pdf"
+      ],
+      "description": "Open claims are listed twice: in an 'outstanding claims' summary and again in the full listing.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.single_address_column",
+      "doc": [
+        "Kestrel SOV 2026.xlsx"
+      ],
+      "description": "Street, town and postcode are crammed into one 'Address' cell.",
+      "resolvable": true,
+      "checks": [
+        "property.locations[ST4 2LS].address.line1",
+        "property.locations[ST4 2LS].address.town",
+        "property.locations[ST4 2LS].address.postcode",
+        "property.locations[BS1 4FH].address.line1",
+        "property.locations[BS1 4FH].address.town",
+        "property.locations[BS1 4FH].address.postcode",
+        "property.locations[BD3 9HN].address.line1",
+        "property.locations[BD3 9HN].address.town",
+        "property.locations[BD3 9HN].address.postcode"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.units_thousands",
+      "doc": [
+        "Kestrel SOV 2026.xlsx"
+      ],
+      "description": "Sums insured are stated in thousands; the only hint is '(\u00a3000)' in the header.",
+      "resolvable": true,
+      "checks": [
+        "property.locations[ST4 2LS].buildings_sum_insured",
+        "property.locations[ST4 2LS].contents_sum_insured",
+        "property.locations[ST4 2LS].bi_sum_insured",
+        "property.locations[ST4 2LS].total_sum_insured",
+        "property.locations[BS1 4FH].buildings_sum_insured",
+        "property.locations[BS1 4FH].contents_sum_insured",
+        "property.locations[BS1 4FH].bi_sum_insured",
+        "property.locations[BS1 4FH].total_sum_insured",
+        "property.locations[BD3 9HN].buildings_sum_insured",
+        "property.locations[BD3 9HN].contents_sum_insured",
+        "property.locations[BD3 9HN].bi_sum_insured",
+        "property.locations[BD3 9HN].total_sum_insured",
+        "property.total_tiv"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "sov.disposed_location",
+      "doc": [
+        "Kestrel SOV 2026.xlsx"
+      ],
+      "description": "A sold site (PE7 7UH) is still in the schedule as a hidden, struck-through row with a 'SOLD' cell comment.",
+      "resolvable": true,
+      "checks": [
+        "property.locations#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.revenue_conflict",
+      "doc": [
+        "01_re_info_needed_for_your_renewal.eml"
+      ],
+      "description": "The email gives turnover as \u00a312,560,000; the form says \u00a311,210,000. Nothing says which is right.",
+      "resolvable": false,
+      "checks": [
+        "insured.annual_revenue"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "insured.annual_revenue",
+        "note": "Turnover on the proposal form differs from the figure in the email."
+      }
+    },
+    {
+      "code": "form.scanned",
+      "doc": [
+        "SCAN_20261115_2874.pdf"
+      ],
+      "description": "Form printed, signed and scanned: skewed, noisy, low-res image with no text layer.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": [
+    "insured.annual_revenue"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "submission_id": "SUB-0005",
+  "line_of_business": "cyber",
+  "insured": {
+    "name": "Granite Accountants & Sons Ltd",
+    "address": {
+      "line1": "102 Albert Avenue",
+      "town": "Derby",
+      "postcode": "DE24 8BU"
+    },
+    "trade": "Accountancy practice",
+    "annual_revenue": 5430000,
+    "employees": 38
+  },
+  "policy": {
+    "inception_date": "2027-02-01",
+    "expiry_date": "2028-01-31",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": true,
+    "signed_date": "2026-11-13"
+  },
+  "property": null,
+  "cyber": {
+    "records_held": null,
+    "mfa_remote_access": true,
+    "mfa_email": false,
+    "offline_backups": true,
+    "edr": false,
+    "pen_test_last_12m": false,
+    "pci_compliant": true,
+    "limit_requested": 5000000
+  },
+  "cargo": null,
+  "claims": [
+    {
+      "date_of_loss": "2024-07-08",
+      "cause": "Data breach",
+      "insurer": "Harbourline Specialty",
+      "paid": 35450,
+      "reserved": 0,
+      "status": "closed"
+    }
+  ],
+  "flags": [
+    {
+      "type": "missing",
+      "field": "claims",
+      "note": "Loss runs only cover 3 years; insurers need 5."
+    },
+    {
+      "type": "conflict",
+      "field": "claims",
+      "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+    },
+    {
+      "type": "missing",
+      "field": "cyber.records_held",
+      "note": "'Approx. number of personal records held' left blank on the proposal form."
+    },
+    {
+      "type": "conflict",
+      "field": "cyber.offline_backups",
+      "note": "Both Yes and No ticked for 'Offline or immutable backups at least weekly?'."
+    }
+  ]
+}

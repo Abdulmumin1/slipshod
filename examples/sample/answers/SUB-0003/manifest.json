@@ -1,0 +1,147 @@
+{
+  "submission_id": "SUB-0003",
+  "line_of_business": "cargo",
+  "difficulty": "hard",
+  "seed": 1036126112,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_re_info_needed_for_your_renewal.eml",
+    "attachments/IMG_2809.jpg",
+    "attachments/Pennine proposal form.pdf"
+  ],
+  "documents": {
+    "form": {
+      "files": [
+        "Pennine proposal form.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:0": {
+      "files": [
+        "IMG_2809.jpg"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "claims.unreported_recent_claim",
+      "doc": [
+        "01_re_info_needed_for_your_renewal.eml"
+      ],
+      "description": "A claim on 2026-11-07 happened after the loss runs were produced; it appears only in the email body.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "claims.declared_claims_free",
+      "doc": [
+        "Pennine proposal form.pdf"
+      ],
+      "description": "The proposal form ticks 'No claims in 5 years' but the loss runs show claims. A fair-presentation problem to raise.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "claims",
+        "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+      }
+    },
+    {
+      "code": "lossrun.phone_photo",
+      "doc": [
+        "IMG_2809.jpg"
+      ],
+      "description": "A loss run arrives as phone photos (JPEG per page): perspective, shadows, desk in frame.",
+      "resolvable": true,
+      "checks": [
+        "claims#set",
+        "claims.fields"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.revenue_conflict",
+      "doc": [
+        "01_re_info_needed_for_your_renewal.eml"
+      ],
+      "description": "The email gives turnover as \u00a325,030,000; the form says \u00a322,350,000. Nothing says which is right.",
+      "resolvable": false,
+      "checks": [
+        "insured.annual_revenue"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "insured.annual_revenue",
+        "note": "Turnover on the proposal form differs from the figure in the email."
+      }
+    },
+    {
+      "code": "form.unsigned",
+      "doc": [
+        "Pennine proposal form.pdf"
+      ],
+      "description": "The proposal form is unsigned and undated, although the email calls it signed.",
+      "resolvable": true,
+      "checks": [
+        "proposal_form.signed",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "proposal_form",
+        "note": "Proposal form is not signed or dated."
+      }
+    },
+    {
+      "code": "form.fillable_fields",
+      "doc": [
+        "Pennine proposal form.pdf"
+      ],
+      "description": "Answers live in PDF form fields (AcroForm widgets), not in the page text; plain text extraction returns an empty form.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "cargo.annual_transit_value",
+        "cargo.max_any_one_conveyance",
+        "cargo.commodities",
+        "cargo.conveyances",
+        "cargo.geographical_limits",
+        "cargo.packaging",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "email.stale_forwarded_figures",
+      "doc": [
+        "01_re_info_needed_for_your_renewal.eml"
+      ],
+      "description": "Last year's renewal summary is forwarded in the thread, with last year's turnover, headcount and dates in clean, easy-to-grab text.",
+      "resolvable": true,
+      "checks": [
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": [
+    "insured.annual_revenue"
+  ]
+}

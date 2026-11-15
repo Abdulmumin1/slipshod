@@ -1,0 +1,89 @@
+{
+  "submission_id": "SUB-0003",
+  "line_of_business": "cargo",
+  "insured": {
+    "name": "Pennine Foods & Sons Ltd",
+    "address": {
+      "line1": "Unit 8, Calder Trading Estate",
+      "town": "Norwich",
+      "postcode": "NR1 6FN"
+    },
+    "trade": "Food wholesaler",
+    "annual_revenue": 22350000,
+    "employees": 56
+  },
+  "policy": {
+    "inception_date": "2027-01-01",
+    "expiry_date": "2027-12-31",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": false,
+    "signed_date": null
+  },
+  "property": null,
+  "cyber": null,
+  "cargo": {
+    "annual_transit_value": 19780000,
+    "max_any_one_conveyance": 750000,
+    "commodities": "Chilled and ambient foodstuffs",
+    "conveyances": [
+      "rail",
+      "road",
+      "sea"
+    ],
+    "geographical_limits": "Worldwide excl. sanctioned territories",
+    "packaging": "Palletised and shrink-wrapped"
+  },
+  "claims": [
+    {
+      "date_of_loss": "2022-08-14",
+      "cause": "Theft in transit",
+      "insurer": "Saltire Commercial",
+      "paid": 49050,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2023-09-19",
+      "cause": "Vehicle overturned",
+      "insurer": "Saltire Commercial",
+      "paid": 37050,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2026-06-05",
+      "cause": "Handling damage",
+      "insurer": "Saltire Commercial",
+      "paid": 1300,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2026-11-07",
+      "cause": "Theft in transit",
+      "insurer": "Saltire Commercial",
+      "paid": 0,
+      "reserved": 3300,
+      "status": "open"
+    }
+  ],
+  "flags": [
+    {
+      "type": "conflict",
+      "field": "claims",
+      "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+    },
+    {
+      "type": "conflict",
+      "field": "insured.annual_revenue",
+      "note": "Turnover on the proposal form differs from the figure in the email."
+    },
+    {
+      "type": "missing",
+      "field": "proposal_form",
+      "note": "Proposal form is not signed or dated."
+    }
+  ]
+}

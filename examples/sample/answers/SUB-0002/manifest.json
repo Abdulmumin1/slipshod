@@ -1,0 +1,142 @@
+{
+  "submission_id": "SUB-0002",
+  "line_of_business": "cyber",
+  "difficulty": "hard",
+  "seed": 1733561996,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_insurance_renewal_hartley_recruitment_li.eml",
+    "attachments/Loss runs Meridian 2022-2026 (scan).pdf",
+    "attachments/Proposal form - signed.pdf"
+  ],
+  "documents": {
+    "form": {
+      "files": [
+        "Proposal form - signed.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:0": {
+      "files": [
+        "Loss runs Meridian 2022-2026 (scan).pdf"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "claims.unreported_recent_claim",
+      "doc": [
+        "01_insurance_renewal_hartley_recruitment_li.eml"
+      ],
+      "description": "A claim on 2026-10-30 happened after the loss runs were produced; it appears only in the email body.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "claims.short_loss_run",
+      "doc": [
+        "Loss runs Meridian 2022-2026 (scan).pdf"
+      ],
+      "description": "Loss runs only go back to 01/02/2024 (3 years, not 5). Older claims are unknowable.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "claims",
+        "note": "Loss runs only cover 3 years; insurers need 5."
+      }
+    },
+    {
+      "code": "claims.open_claims_repeated",
+      "doc": [
+        "Loss runs Meridian 2022-2026 (scan).pdf"
+      ],
+      "description": "Open claims are listed twice: in an 'outstanding claims' summary and again in the full listing.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "lossrun.scanned",
+      "doc": [
+        "Loss runs Meridian 2022-2026 (scan).pdf"
+      ],
+      "description": "A loss run was faxed/scanned: image only, skewed and noisy.",
+      "resolvable": true,
+      "checks": [
+        "claims#set",
+        "claims.fields"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.blank_field",
+      "doc": [
+        "Proposal form - signed.pdf"
+      ],
+      "description": "'Number of employees' was left blank and is not stated anywhere else.",
+      "resolvable": true,
+      "checks": [
+        "insured.employees"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "insured.employees",
+        "note": "'Number of employees' left blank on the proposal form."
+      }
+    },
+    {
+      "code": "form.fillable_fields",
+      "doc": [
+        "Proposal form - signed.pdf"
+      ],
+      "description": "Answers live in PDF form fields (AcroForm widgets), not in the page text; plain text extraction returns an empty form.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "cyber.records_held",
+        "cyber.mfa_remote_access",
+        "cyber.mfa_email",
+        "cyber.offline_backups",
+        "cyber.edr",
+        "cyber.pen_test_last_12m",
+        "cyber.pci_compliant",
+        "cyber.limit_requested",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "email.stale_forwarded_figures",
+      "doc": [
+        "01_insurance_renewal_hartley_recruitment_li.eml"
+      ],
+      "description": "Last year's renewal summary is forwarded in the thread, with last year's turnover, headcount and dates in clean, easy-to-grab text.",
+      "resolvable": true,
+      "checks": [
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": []
+}

@@ -1,0 +1,106 @@
+{
+  "submission_id": "SUB-0004",
+  "line_of_business": "property",
+  "insured": {
+    "name": "Kestrel Foods Limited",
+    "address": {
+      "line1": "17 Foundry Street",
+      "town": "Stoke-on-Trent",
+      "postcode": "ST4 2LS"
+    },
+    "trade": "Food wholesaler",
+    "annual_revenue": 11210000,
+    "employees": 35
+  },
+  "policy": {
+    "inception_date": "2026-12-01",
+    "expiry_date": "2027-11-30",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": true,
+    "signed_date": "2026-11-01"
+  },
+  "property": {
+    "total_tiv": 10775000,
+    "locations": [
+      {
+        "address": {
+          "line1": "17 Foundry Street",
+          "town": "Stoke-on-Trent",
+          "postcode": "ST4 2LS"
+        },
+        "occupancy": "Warehouse & distribution",
+        "construction": "Brick walls, steel truss roof",
+        "year_built": 2016,
+        "sprinklered": false,
+        "buildings_sum_insured": 2610000,
+        "contents_sum_insured": 2460000,
+        "bi_sum_insured": 1060000,
+        "total_sum_insured": 6130000
+      },
+      {
+        "address": {
+          "line1": "Unit 1, Tameside Trading Estate",
+          "town": "Bristol",
+          "postcode": "BS1 4FH"
+        },
+        "occupancy": "Offices",
+        "construction": "Brick walls, steel truss roof",
+        "year_built": 1920,
+        "sprinklered": false,
+        "buildings_sum_insured": 455000,
+        "contents_sum_insured": 120000,
+        "bi_sum_insured": 2420000,
+        "total_sum_insured": 2995000
+      },
+      {
+        "address": {
+          "line1": "Unit 3, Waterside Industrial Estate",
+          "town": "Bradford",
+          "postcode": "BD3 9HN"
+        },
+        "occupancy": "Offices",
+        "construction": "Brick/slate",
+        "year_built": 2009,
+        "sprinklered": true,
+        "buildings_sum_insured": 1375000,
+        "contents_sum_insured": 275000,
+        "bi_sum_insured": 0,
+        "total_sum_insured": 1650000
+      }
+    ]
+  },
+  "cyber": null,
+  "cargo": null,
+  "claims": [
+    {
+      "date_of_loss": "2026-07-09",
+      "cause": "Flood",
+      "insurer": "Castlegate Underwriting",
+      "paid": 33300,
+      "reserved": 0,
+      "status": "closed"
+    },
+    {
+      "date_of_loss": "2026-08-01",
+      "cause": "Flood",
+      "insurer": "Castlegate Underwriting",
+      "paid": 39000,
+      "reserved": 49050,
+      "status": "open"
+    }
+  ],
+  "flags": [
+    {
+      "type": "conflict",
+      "field": "claims",
+      "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+    },
+    {
+      "type": "conflict",
+      "field": "insured.annual_revenue",
+      "note": "Turnover on the proposal form differs from the figure in the email."
+    }
+  ]
+}

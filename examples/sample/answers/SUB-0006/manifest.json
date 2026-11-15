@@ -1,0 +1,170 @@
+{
+  "submission_id": "SUB-0006",
+  "line_of_business": "cargo",
+  "difficulty": "hard",
+  "seed": 620673632,
+  "as_of": "2026-11-15",
+  "generator": "slipshod 0.1.0",
+  "inputs": [
+    "01_renewal_info.eml",
+    "attachments/Loss runs Castlegate 2024-2026.pdf",
+    "attachments/Loss runs Northgate 2021-2024 (scan).pdf",
+    "attachments/Proposal form - signed.pdf"
+  ],
+  "documents": {
+    "form": {
+      "files": [
+        "Proposal form - signed.pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:0": {
+      "files": [
+        "Loss runs Northgate 2021-2024 (scan).pdf"
+      ],
+      "attached": true
+    },
+    "lossrun:1": {
+      "files": [
+        "Loss runs Castlegate 2024-2026.pdf"
+      ],
+      "attached": true
+    }
+  },
+  "defects": [
+    {
+      "code": "claims.unreported_recent_claim",
+      "doc": [
+        "01_renewal_info.eml"
+      ],
+      "description": "A claim on 2026-11-08 happened after the loss runs were produced; it appears only in the email body.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "claims.short_loss_run",
+      "doc": [
+        "Loss runs Northgate 2021-2024 (scan).pdf",
+        "Loss runs Castlegate 2024-2026.pdf"
+      ],
+      "description": "Loss runs only go back to 01/12/2023 (3 years, not 5). Older claims are unknowable.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "claims",
+        "note": "Loss runs only cover 3 years; insurers need 5."
+      }
+    },
+    {
+      "code": "claims.declared_claims_free",
+      "doc": [
+        "Proposal form - signed.pdf"
+      ],
+      "description": "The proposal form ticks 'No claims in 5 years' but the loss runs show claims. A fair-presentation problem to raise.",
+      "resolvable": true,
+      "checks": [
+        "claims#set"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "claims",
+        "note": "Proposal form declares no claims in 5 years; loss runs show claims."
+      }
+    },
+    {
+      "code": "lossrun.scanned",
+      "doc": [
+        "Loss runs Northgate 2021-2024 (scan).pdf"
+      ],
+      "description": "A loss run was faxed/scanned: image only, skewed and noisy.",
+      "resolvable": true,
+      "checks": [
+        "claims#set",
+        "claims.fields"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "form.revenue_conflict",
+      "doc": [
+        "01_renewal_info.eml"
+      ],
+      "description": "The email gives turnover as \u00a34,240,000; the form says \u00a33,590,000. Nothing says which is right.",
+      "resolvable": false,
+      "checks": [
+        "insured.annual_revenue"
+      ],
+      "expected_flag": {
+        "type": "conflict",
+        "field": "insured.annual_revenue",
+        "note": "Turnover on the proposal form differs from the figure in the email."
+      }
+    },
+    {
+      "code": "form.blank_field",
+      "doc": [
+        "Proposal form - signed.pdf"
+      ],
+      "description": "'Number of employees' was left blank and is not stated anywhere else.",
+      "resolvable": true,
+      "checks": [
+        "insured.employees"
+      ],
+      "expected_flag": {
+        "type": "missing",
+        "field": "insured.employees",
+        "note": "'Number of employees' left blank on the proposal form."
+      }
+    },
+    {
+      "code": "form.fillable_fields",
+      "doc": [
+        "Proposal form - signed.pdf"
+      ],
+      "description": "Answers live in PDF form fields (AcroForm widgets), not in the page text; plain text extraction returns an empty form.",
+      "resolvable": true,
+      "checks": [
+        "insured.name",
+        "insured.address.line1",
+        "insured.address.town",
+        "insured.address.postcode",
+        "insured.trade",
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date",
+        "policy.expiry_date",
+        "cargo.annual_transit_value",
+        "cargo.max_any_one_conveyance",
+        "cargo.commodities",
+        "cargo.conveyances",
+        "cargo.geographical_limits",
+        "cargo.packaging",
+        "proposal_form.signed_date"
+      ],
+      "expected_flag": null
+    },
+    {
+      "code": "email.stale_forwarded_figures",
+      "doc": [
+        "01_renewal_info.eml"
+      ],
+      "description": "Last year's renewal summary is forwarded in the thread, with last year's turnover, headcount and dates in clean, easy-to-grab text.",
+      "resolvable": true,
+      "checks": [
+        "insured.annual_revenue",
+        "insured.employees",
+        "policy.inception_date"
+      ],
+      "expected_flag": null
+    }
+  ],
+  "unscored": [
+    "insured.annual_revenue"
+  ]
+}

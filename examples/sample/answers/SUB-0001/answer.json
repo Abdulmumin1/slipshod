@@ -1,0 +1,143 @@
+{
+  "submission_id": "SUB-0001",
+  "line_of_business": "property",
+  "insured": {
+    "name": "Harrow Foods & Sons Ltd",
+    "address": {
+      "line1": "Unit 15, Trent Vale Industrial Estate",
+      "town": "Manchester",
+      "postcode": "M1 1QR"
+    },
+    "trade": "Food wholesaler",
+    "annual_revenue": 2980000,
+    "employees": 86
+  },
+  "policy": {
+    "inception_date": "2027-01-01",
+    "expiry_date": "2027-12-31",
+    "currency": "GBP"
+  },
+  "proposal_form": {
+    "signed": true,
+    "signed_date": "2026-10-31"
+  },
+  "property": {
+    "total_tiv": 33180000,
+    "locations": [
+      {
+        "address": {
+          "line1": "Unit 15, Trent Vale Industrial Estate",
+          "town": "Manchester",
+          "postcode": "M1 1QR"
+        },
+        "occupancy": "Warehouse & distribution",
+        "construction": "Brick walls, steel truss roof",
+        "year_built": 1956,
+        "sprinklered": false,
+        "buildings_sum_insured": 2595000,
+        "contents_sum_insured": 755000,
+        "bi_sum_insured": 190000,
+        "total_sum_insured": 3540000
+      },
+      {
+        "address": {
+          "line1": "Unit 22, Ashfield Enterprise Park",
+          "town": "Reading",
+          "postcode": "RG30 1SL"
+        },
+        "occupancy": "Offices",
+        "construction": "Brick walls, steel truss roof",
+        "year_built": 1904,
+        "sprinklered": false,
+        "buildings_sum_insured": 285000,
+        "contents_sum_insured": 215000,
+        "bi_sum_insured": 1680000,
+        "total_sum_insured": 2180000
+      },
+      {
+        "address": {
+          "line1": "Units 10-11, Tameside Business Park",
+          "town": "Leeds",
+          "postcode": "LS10 6EB"
+        },
+        "occupancy": "Cold store",
+        "construction": "Steel frame, brick infill",
+        "year_built": 1994,
+        "sprinklered": true,
+        "buildings_sum_insured": 4835000,
+        "contents_sum_insured": 1430000,
+        "bi_sum_insured": 1260000,
+        "total_sum_insured": 7525000
+      },
+      {
+        "address": {
+          "line1": "Unit 1, Brindley Industrial Estate",
+          "town": "Manchester",
+          "postcode": "M17 6SU"
+        },
+        "occupancy": "Warehouse & distribution",
+        "construction": "Brick walls, steel truss roof",
+        "year_built": 1941,
+        "sprinklered": false,
+        "buildings_sum_insured": 3960000,
+        "contents_sum_insured": 1685000,
+        "bi_sum_insured": 2430000,
+        "total_sum_insured": 8075000
+      },
+      {
+        "address": {
+          "line1": "Unit 16, Phoenix Industrial Estate",
+          "town": "Manchester",
+          "postcode": "M12 2YG"
+        },
+        "occupancy": "Cold store",
+        "construction": "Brick/slate",
+        "year_built": 1956,
+        "sprinklered": true,
+        "buildings_sum_insured": 6215000,
+        "contents_sum_insured": 190000,
+        "bi_sum_insured": 720000,
+        "total_sum_insured": 7125000
+      },
+      {
+        "address": {
+          "line1": "Units 6-7, Tameside Trading Estate",
+          "town": "Reading",
+          "postcode": "RG30 4WJ"
+        },
+        "occupancy": "Cold store",
+        "construction": null,
+        "year_built": 1934,
+        "sprinklered": false,
+        "buildings_sum_insured": 2905000,
+        "contents_sum_insured": 1340000,
+        "bi_sum_insured": 490000,
+        "total_sum_insured": 4735000
+      }
+    ]
+  },
+  "cyber": null,
+  "cargo": null,
+  "claims": [
+    {
+      "date_of_loss": "2025-12-31",
+      "cause": "Accidental damage",
+      "insurer": "Albion Mutual",
+      "paid": 1850,
+      "reserved": 0,
+      "status": "closed"
+    }
+  ],
+  "flags": [
+    {
+      "type": "missing",
+      "field": "property.locations[RG30 4WJ].construction",
+      "note": "Construction not provided."
+    },
+    {
+      "type": "conflict",
+      "field": "insured.annual_revenue",
+      "note": "Turnover on the proposal form differs from the figure in the email."
+    }
+  ]
+}

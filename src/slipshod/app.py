@@ -27,6 +27,7 @@ from PIL import Image
 
 from . import __version__
 from .baseline import run as run_baseline
+from .defects import REGISTRY
 from .generate import generate_corpus, generate_submission
 from .schema import BRIEF, SCHEMA
 from .score import format_details, format_report, score_corpus
@@ -123,7 +124,7 @@ def _traps_md(manifest: dict) -> str:
 
 
 def generate_one(line: str, difficulty: str, seed):
-    seed = int(seed) if seed not in (None, "") else random.randrange(1, 10**6)
+    seed = int(seed or 0) or random.randrange(1, 10**6)
     sub = generate_submission("DEMO", line, difficulty, seed, AS_OF)
     emails, gallery, sheets = [], [], []
     for name in sorted(sub.files):
@@ -175,6 +176,57 @@ def ensure_benchmark() -> Path:
 def benchmark_download():
     ensure_benchmark()
     return str(BENCH_ZIP)
+
+
+BULK_MAX = 100
+
+
+def generate_bulk(n, lines, difficulty, seed, only, progress=gr.Progress()):
+    n = max(1, min(int(n or 1), BULK_MAX))
+    lines = [x for x in ("property", "cyber", "cargo") if x in (lines or [])]
+    if not lines:
+        raise gr.Error("Pick at least one line of business.")
+    seed = int(seed or 0) or random.randrange(1, 10**6)
+    only = list(only or []) or None
+    if only:
+        applicable = {c for s in REGISTRY if s.code in only for c in s.lines}
+        lines = [x for x in lines if x in applicable] or lines
+
+    tag = f"slipshod-n{n}-{difficulty}-seed{seed}"
+    out = WORK / "bulk" / next(tempfile._get_candidate_names()) / tag
+    done = [0]
+
+    def tick(sub):
+        done[0] += 1
+        progress(done[0] / n, desc=f"Generated {done[0]}/{n}")
+
+    progress(0, desc="Starting")
+    meta = generate_corpus(out, n, seed, lines, difficulty, AS_OF, only, tick)
+    readme = (
+        f"slipshod corpus: {n} submissions, lines={','.join(lines)}, difficulty={difficulty}, seed={seed}, as-of {AS_OF}\n"
+        + (f"traps: {', '.join(only)}\n" if only else "")
+        + "\ninputs/<id>/   give this to your agent\n"
+        "answers/<id>/  the answer key (answer.json) and the traps planted (manifest.json)\n\n"
+        "Score predictions (<id>.json per submission) with:\n"
+        f"  slipshod score {tag} <predictions_dir>\n\n"
+        f"Regenerate exactly with:\n  slipshod generate {tag} -n {n} --seed {seed} --lines {','.join(lines)} "
+        f"--difficulty {difficulty} --as-of {AS_OF}" + (f" --only {','.join(only)}" if only else "") + "\n\n" + BRIEF)
+    files = {f"{tag}/README.txt": readme.encode(), f"{tag}/schema.json": json.dumps(SCHEMA, indent=2).encode()}
+    for p in out.rglob("*"):
+        if p.is_file():
+            files[f"{tag}/{p.relative_to(out)}"] = p.read_bytes()
+    zip_path = _zip(files, out.parent / f"{tag}.zip")
+    shutil.rmtree(out)
+
+    counts: dict[str, int] = {}
+    for s in meta["submissions"]:
+        for code in s["defects"]:
+            counts[code] = counts.get(code, 0) + 1
+    by_line = {x: sum(s["line_of_business"] == x for s in meta["submissions"]) for x in lines}
+    summary = (f"**{n} submissions** ({', '.join(f'{v} {k}' for k, v in by_line.items())}), seed `{seed}`, "
+               f"{sum(counts.values())} traps planted in total.\n\n"
+               + "\n".join(f"- `{k}` × {v}" for k, v in sorted(counts.items(), key=lambda kv: -kv[1])))
+    return zip_path, summary
 
 
 def _collect_predictions(paths: list[str], dest: Path) -> int:
@@ -245,7 +297,7 @@ def build() -> gr.Blocks:
             with gr.Row():
                 line = gr.Dropdown(["property", "cyber", "cargo"], value="property", label="Line of business")
                 difficulty = gr.Radio(["clean", "easy", "medium", "hard", "nightmare"], value="hard", label="Difficulty")
-                seed = gr.Number(value=7, precision=0, label="Seed (leave blank for random)")
+                seed = gr.Number(value=7, precision=0, label="Seed (0 = random)")
             go = gr.Button("Generate", variant="primary")
             summary = gr.Markdown()
             with gr.Row():
@@ -264,7 +316,27 @@ def build() -> gr.Blocks:
             go.click(generate_one, [line, difficulty, seed], outputs)
             demo.load(generate_one, [line, difficulty, seed], outputs)
 
-        with gr.Tab("2 · Score your agent"):
+        with gr.Tab("2 · Generate in bulk"):
+            gr.Markdown(
+                f"Build your own corpus of up to {BULK_MAX} submissions. You get one zip with `inputs/` (for your agent), "
+                "`answers/` (answer keys plus the traps planted), the schema, and the exact command to regenerate it. "
+                "For bigger corpora, use the CLI: `slipshod generate corpus -n 1000`.")
+            with gr.Row():
+                b_n = gr.Slider(1, BULK_MAX, value=30, step=1, label="Number of submissions")
+                b_seed = gr.Number(value=0, precision=0, label="Seed (0 = random)")
+            with gr.Row():
+                b_lines = gr.CheckboxGroup(["property", "cyber", "cargo"], value=["property", "cyber", "cargo"],
+                                           label="Lines of business")
+                b_diff = gr.Radio(["clean", "easy", "medium", "hard", "nightmare", "mixed"], value="mixed",
+                                  label="Difficulty")
+            b_only = gr.Dropdown([s.code for s in REGISTRY], multiselect=True, value=[],
+                                 label="Only these traps (optional; overrides difficulty)")
+            b_go = gr.Button("Generate corpus", variant="primary")
+            b_file = gr.File(label="Corpus (inputs + answers)")
+            b_summary = gr.Markdown()
+            b_go.click(generate_bulk, [b_n, b_lines, b_diff, b_seed, b_only], [b_file, b_summary])
+
+        with gr.Tab("3 · Score your agent"):
             gr.Markdown(
                 f"**The benchmark:** {BENCH_N} submissions (seed {BENCH_SEED}) across property, cyber and cargo, at mixed difficulty.\n\n"
                 "1. Download it and run your agent on every folder in `inputs/`.\n"

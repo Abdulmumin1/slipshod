@@ -8,7 +8,7 @@
 
 | | |
 |---|---|
-| **In the browser, no install** | **[ancep.yaqeen.me →](https://ancep.yaqeen.me)** Generate a submission, flip through the documents, reveal the traps, and score your agent on a 60-submission benchmark. (If nobody has used it for a while, it takes about 15 seconds to wake up.) |
+| **In the browser, no install** | **[ancep.yaqeen.me →](https://ancep.yaqeen.me)** Generate a submission and flip through the documents and traps, download a corpus of up to 100 with answer keys, or score your agent on a 60-submission benchmark. (If nobody has used it for a while, it takes about 15 seconds to wake up.) |
 | **One command** (needs [uv](https://docs.astral.sh/uv/)) | `uvx --from git+https://github.com/Abdulmumin1/slipshod slipshod generate corpus -n 30` |
 | **The web app on your machine** | `uvx --from "slipshod[app] @ git+https://github.com/Abdulmumin1/slipshod" slipshod app` |
 | **Docker** | `docker build -t slipshod https://github.com/Abdulmumin1/slipshod.git && docker run -p 7860:7860 slipshod` |

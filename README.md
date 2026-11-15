@@ -8,7 +8,7 @@
 
 | | |
 |---|---|
-| **In the browser, no install** | **[Live demo →](https://huggingface.co/spaces/Abdulmumin1/slipshod)** Generate a submission, flip through the documents, reveal the traps, and score your agent on a 60-submission benchmark |
+| **In the browser, no install** | **[Live demo →](https://huggingface.co/spaces/abdulmuminyqn/slipshod)** Generate a submission, flip through the documents, reveal the traps, and score your agent on a 60-submission benchmark |
 | **One command** (needs [uv](https://docs.astral.sh/uv/)) | `uvx --from git+https://github.com/Abdulmumin1/slipshod slipshod generate corpus -n 30` |
 | **The web app on your machine** | `uvx --from "slipshod[app] @ git+https://github.com/Abdulmumin1/slipshod" slipshod app` |
 | **Just look at the files** | [`examples/sample/`](examples/sample/): six submissions with answer keys |
